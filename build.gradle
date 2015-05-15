@@ -38,6 +38,18 @@ dependencies {
     compile 'org.bitbucket.klane:klane-weka:1.0'
 }
 
+javadoc {
+    title 'WANN: Weka Artificial Neural Network ' + version + ' API'
+
+    options {
+        author true
+        linkSource true
+        links 'https://docs.oracle.com/javase/8/docs/api/'
+        links 'http://download.java.net/jdk8/jfxdocs/'
+        links 'http://weka.sourceforge.net/doc.stable/'
+    }
+}
+
 nexus {
     sign = false
     repositoryUrl = nexusURL + 'releases'
