@@ -4,7 +4,7 @@ import com.github.klane.wann.core.Layer;
 import com.github.klane.wann.core.Network;
 import com.github.klane.wann.function.error.ErrorFunction;
 import com.google.common.base.Preconditions;
-import klane.weka.WekaUtils;
+import org.bitbucket.klane.weka.WekaUtils;
 import weka.core.Instance;
 import weka.core.Instances;
 

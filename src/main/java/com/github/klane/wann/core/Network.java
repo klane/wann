@@ -5,7 +5,7 @@ import com.github.klane.wann.function.input.InputFunctions;
 import com.github.klane.wann.learn.Backpropagation;
 import com.github.klane.wann.learn.LearningRule;
 import com.google.common.base.Preconditions;
-import klane.weka.WekaUtils;
+import org.bitbucket.klane.weka.WekaUtils;
 import weka.classifiers.Classifier;
 import weka.core.Attribute;
 import weka.core.Instance;
