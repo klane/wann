@@ -22,7 +22,10 @@ public abstract class WANNBuilder<T, U extends WANNBuilder<T, U>> implements Bui
     }
 
     public U bias(final boolean biasFlag) {
-        this.biasFlag = biasFlag;
+        if (this.bias == null) {
+            this.biasFlag = biasFlag;
+        }
+
         return this.get();
     }
 
