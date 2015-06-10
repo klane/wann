@@ -1,0 +1,11 @@
+@relation XOR
+
+@attribute P numeric
+@attribute Q numeric
+@attribute XOR numeric
+
+@data
+0,0,0
+0,1,1
+1,0,1
+1,1,0

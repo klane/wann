@@ -1,0 +1,11 @@
+@relation XNOR
+
+@attribute P numeric
+@attribute Q numeric
+@attribute XNOR numeric
+
+@data
+0,0,1
+0,1,0
+1,0,0
+1,1,1

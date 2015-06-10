@@ -36,6 +36,7 @@ repositories {
 dependencies {
     compile 'org.bitbucket.klane:klane-math:1.0'
     compile 'org.bitbucket.klane:klane-weka:1.0'
+    testCompile 'junit:junit:4.12'
 }
 
 javadoc {
