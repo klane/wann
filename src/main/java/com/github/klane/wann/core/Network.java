@@ -2,9 +2,9 @@ package com.github.klane.wann.core;
 
 import com.github.klane.wann.function.activation.ActivationFunctions;
 import com.github.klane.wann.function.input.InputFunctions;
-import com.github.klane.wann.learn.Backpropagation;
 import com.github.klane.wann.learn.LearningRule;
 import com.google.common.base.Preconditions;
+import javafx.util.Builder;
 import org.bitbucket.klane.weka.WekaUtils;
 import weka.classifiers.Classifier;
 import weka.core.Attribute;
@@ -25,22 +25,19 @@ public final class Network extends Classifier implements Iterable<Layer> {
     private double[] epochError;
     final Neuron bias;
 
-    private Network(final Builder builder) {
+    private Network(final NetworkBuilder builder) {
         this.name = builder.name;
         this.layers = new ArrayList<>();
         this.learningRule = builder.learningRule;
 
-        this.bias = Neuron.builder().name("Bias").activationFunction(ActivationFunctions.LINEAR).build();
-        this.bias.setInput(1);
-        this.bias.calculate();
+        this.bias = Neuron.builder().name("Bias").build();
+        this.bias.setOutput(1);
 
         this.inputLayer = Layer.builder()
                 .name("Input Layer")
                 .network(this)
-                .neuron(builder.inputValues.stream()
-                        .map(s -> Neuron.builder().name(s).activationFunction(ActivationFunctions.LINEAR))
-                        .collect(Collectors.toList()))
-                .bias(false)
+                .activationFunction(ActivationFunctions.LINEAR)
+                .neuron(builder.inputValues.stream().map(s -> Neuron.builder().name(s)).collect(Collectors.toList()))
                 .build();
 
         this.layers.add(this.inputLayer);
@@ -49,23 +46,19 @@ public final class Network extends Classifier implements Iterable<Layer> {
                 .forEach(b -> this.layers.add(b
                         .name("Hidden Layer " + (builder.layers.indexOf(b) + 1))
                         .network(this)
-                        .inputFunction(builder.inputFunction)
-                        .activationFunction(builder.activationFunction)
-                        .bias(builder.bias)
-                        .bias(builder.biasFlag)
+                        .inputFunction(InputFunctions.WEIGHTED_SUM)
+                        .activationFunction(ActivationFunctions.SIGMOID)
                         .build()));
 
-        final Layer.Builder outputBuilder = (builder.outputValues.isEmpty() ?
+        final Layer.LayerBuilder outputBuilder = (builder.outputValues.isEmpty() ?
                 builder.layers.get(builder.layers.size()-1) : Layer.builder())
                 .name("Output Layer")
                 .network(this)
-                .inputFunction(builder.inputFunction)
-                .activationFunction(builder.activationFunction)
-                .bias(builder.bias)
-                .bias(builder.biasFlag);
+                .inputFunction(InputFunctions.WEIGHTED_SUM)
+                .activationFunction(ActivationFunctions.LINEAR);
 
         if (builder.outputValues.isEmpty()) {
-            List<Neuron.Builder> neurons = builder.layers.get(builder.layers.size()-1).neurons;
+            List<Neuron.NeuronBuilder> neurons = builder.layers.get(builder.layers.size()-1).neurons;
             IntStream.rangeClosed(0, neurons.size()-1).forEach(i -> neurons.get(i).name("Output " + (i + 1)));
         } else {
             outputBuilder.neuron(builder.outputValues.stream()
@@ -79,14 +72,15 @@ public final class Network extends Classifier implements Iterable<Layer> {
     @Override
     public void buildClassifier(final Instances dataSet) {
         Preconditions.checkNotNull(dataSet);
+        Preconditions.checkNotNull(this.learningRule, "Must specify a learning rule");
         //TODO check if data set class attribute matches network output attribute
         //TODO reset network to initial state?
 
         this.epochError = this.learningRule.apply(this, dataSet);
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static NetworkBuilder builder() {
+        return new NetworkBuilder();
     }
 
     @Override
@@ -156,14 +150,15 @@ public final class Network extends Classifier implements Iterable<Layer> {
         this.layers.forEach(Layer::calculate);
     }
 
-    public static final class Builder extends WANNBuilder<Network, Builder> {
+    public static final class NetworkBuilder implements Builder<Network> {
 
+        private String name;
         private final List<String> inputValues;
         private final List<String> outputValues;
-        private final List<Layer.Builder> layers;
+        private final List<Layer.LayerBuilder> layers;
         private LearningRule learningRule;
 
-        private Builder() {
+        private NetworkBuilder() {
             this.layers = new ArrayList<>();
             this.inputValues = new ArrayList<>();
             this.outputValues = new ArrayList<>();
@@ -172,35 +167,22 @@ public final class Network extends Classifier implements Iterable<Layer> {
         @Override
         public Network build() {
             Preconditions.checkArgument(this.layers.size() > 0, "Empty network");
-
-            if (super.inputFunction == null) {
-                super.inputFunction(InputFunctions.WEIGHTED_SUM);
-            }
-
-            if (super.activationFunction == null) {
-                super.activationFunction(ActivationFunctions.SIGMOID);
-            }
-
-            if (this.learningRule == null) {
-                this.learningRule(new Backpropagation());
-            }
-
             return new Network(this);
         }
 
-        public Builder dataSet(final Instances dataSet) {
+        public NetworkBuilder dataSet(final Instances dataSet) {
             Preconditions.checkNotNull(dataSet);
 
             return this.name(dataSet.relationName())
                     .inputs(WekaUtils.attributesIgnoreClass(dataSet)).output(dataSet.classAttribute());
         }
 
-        public Builder inputs(final Attribute... inputs) {
+        public NetworkBuilder inputs(final Attribute... inputs) {
             Preconditions.checkNotNull(inputs);
             return this.inputs(Arrays.asList(inputs));
         }
 
-        public Builder inputs(final Collection<Attribute> inputs) {
+        public NetworkBuilder inputs(final Collection<Attribute> inputs) {
             Preconditions.checkNotNull(inputs);
 
             for (Attribute a : inputs) {
@@ -215,7 +197,7 @@ public final class Network extends Classifier implements Iterable<Layer> {
             return this;
         }
 
-        public Builder layer(final int... numNeurons) {
+        public NetworkBuilder layer(final int... numNeurons) {
             Preconditions.checkNotNull(numNeurons);
 
             IntStream.range(0, numNeurons.length).forEach(i -> this.layer(Layer.builder().neuron(
@@ -224,19 +206,24 @@ public final class Network extends Classifier implements Iterable<Layer> {
             return this;
         }
 
-        public Builder layer(final Layer.Builder layer) {
+        public NetworkBuilder layer(final Layer.LayerBuilder layer) {
             Preconditions.checkNotNull(layer);
             this.layers.add(layer);
             return this;
         }
 
-        public Builder learningRule(final LearningRule learningRule) {
+        public NetworkBuilder learningRule(final LearningRule learningRule) {
             Preconditions.checkNotNull(learningRule);
             this.learningRule = learningRule;
             return this;
         }
 
-        public Builder output(final Attribute output) {
+        public NetworkBuilder name(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        public NetworkBuilder output(final Attribute output) {
             Preconditions.checkNotNull(output);
 
             if (output.isNumeric()) {
@@ -245,11 +232,6 @@ public final class Network extends Classifier implements Iterable<Layer> {
                 this.outputValues.addAll(WekaUtils.values(output));
             }
 
-            return this;
-        }
-
-        @Override
-        Builder get() {
             return this;
         }
     }

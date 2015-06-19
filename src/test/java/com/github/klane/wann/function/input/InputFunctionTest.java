@@ -33,7 +33,7 @@ public final class InputFunctionTest {
                         Neuron.builder().connection(0, 1.0).bias(-1.0),
                         Neuron.builder().connection(0, 1.0).connection(1, 1.0).bias(-2.0),
                         Neuron.builder().connection(1, 1.0).bias(-1.0)))
-                .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).bias(-1.0).neuron(1.0, -2.0, 1.0))
+                .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).neuronWithBias(-1.0, 1.0, -2.0, 1.0))
                 .build();
 
         connections = network.getOutputLayer().get(0).getInputConnections();

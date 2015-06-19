@@ -64,7 +64,7 @@ public final class NetworkTest {
                 .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).neuron(
                         Neuron.builder().connection(0, 2.0).connection(1, 2.0).bias(-3.0),
                         Neuron.builder().connection(0, -2.0).connection(1, -2.0).bias(1.0)))
-                .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).bias(-1.0).neuron(2.0, 2.0))
+                .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).neuronWithBias(-1.0, 2.0, 2.0))
                 .build();
 
         networksClassifyInstances(instances, network);
@@ -74,8 +74,7 @@ public final class NetworkTest {
     public void numericXOR() throws Exception {
         Instances instances = new DataSetBuilder().arffLoad(new File(PATH + "XOR_numeric.arff")).build();
         List<Network> networks = new ArrayList<>();
-        Step step_1 = new Step(0.0, 1.0, 1.0);
-        Step step_2 = new Step(0.0, 1.0, 2.0);
+        Step step = new Step(0.0, 1.0, 1.0);
 
         networks.add(Network.builder()
                 .name(instances.relationName())
@@ -84,17 +83,29 @@ public final class NetworkTest {
                         Neuron.builder().connection(0, 1.0).bias(-1.0),
                         Neuron.builder().connection(0, 1.0).connection(1, 1.0).bias(-2.0),
                         Neuron.builder().connection(1, 1.0).bias(-1.0)))
-                .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).bias(-1.0).neuron(1.0, -2.0, 1.0))
+                .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).neuronWithBias(-1.0, 1.0, -2.0, 1.0))
                 .build());
 
         networks.add(Network.builder()
                 .name(instances.relationName())
                 .inputs(WekaUtils.attributesIgnoreClass(instances))
-                .layer(Layer.builder().neuron(
-                        Neuron.builder().connection(0, 1.0).activationFunction(step_1),
-                        Neuron.builder().connection(0, 1.0).connection(1, 1.0).activationFunction(step_2),
-                        Neuron.builder().connection(1, 1.0).activationFunction(step_1)))
-                .layer(Layer.builder().activationFunction(step_1).neuron(1.0, -2.0, 1.0))
+                .layer(Layer.builder().activationFunction(step).neuron(
+                        Neuron.builder().connection(0, 1.0),
+                        Neuron.builder().connection(0, 1.0).connection(1, 1.0).bias(-1.0),
+                        Neuron.builder().connection(1, 1.0)))
+                .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).neuron(
+                        Neuron.builder().connection(0, 1.0).connection(1, -2.0).connection(2, 1.0).bias(-1.0)))
+                .build());
+
+        networks.add(Network.builder()
+                .name(instances.relationName())
+                .inputs(WekaUtils.attributesIgnoreClass(instances))
+                .layer(Layer.builder().activationFunction(step).neuron(
+                        Neuron.builder().connection(0, 1.0),
+                        Neuron.builder().connection(0, 1.0).connection(1, 1.0).bias(-1.0),
+                        Neuron.builder().connection(1, 1.0)))
+                .layer(Layer.builder().activationFunction(step).neuron(
+                        Neuron.builder().connection(0, 1.0).connection(1, -2.0).connection(2, 1.0)))
                 .build());
 
         networks.add(Network.builder()
@@ -103,16 +114,27 @@ public final class NetworkTest {
                 .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).neuron(
                         Neuron.builder().connection(0, 1.0).connection(1, 1.0).bias(-2.0),
                         Neuron.builder().connection(0, 1.0).connection(1, 1.0).bias(-1.0)))
-                .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).bias(-1.0).neuron(-1.0, 1.0))
+                .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).neuronWithBias(-1.0, -1.0, 1.0))
                 .build());
 
         networks.add(Network.builder()
                 .name(instances.relationName())
                 .inputs(WekaUtils.attributesIgnoreClass(instances))
-                .layer(Layer.builder().neuron(
-                        Neuron.builder().connection(0, 1.0).connection(1, 1.0).activationFunction(step_2),
-                        Neuron.builder().connection(0, 1.0).connection(1, 1.0).activationFunction(step_1)))
-                .layer(Layer.builder().activationFunction(step_1).neuron(-1.0, 1.0))
+                .layer(Layer.builder().activationFunction(step).neuron(
+                        Neuron.builder().connection(0, 1.0).connection(1, 1.0).bias(-1.0),
+                        Neuron.builder().connection(0, 1.0).connection(1, 1.0)))
+                .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).neuron(
+                        Neuron.builder().connection(0, -1.0).connection(1, 1.0).bias(-1.0)))
+                .build());
+
+        networks.add(Network.builder()
+                .name(instances.relationName())
+                .inputs(WekaUtils.attributesIgnoreClass(instances))
+                .layer(Layer.builder().activationFunction(step).neuron(
+                        Neuron.builder().connection(0, 1.0).connection(1, 1.0).bias(-1.0),
+                        Neuron.builder().connection(0, 1.0).connection(1, 1.0)))
+                .layer(Layer.builder().activationFunction(step).neuron(
+                        Neuron.builder().connection(0, -1.0).connection(1, 1.0)))
                 .build());
 
         networks.add(Network.builder()
@@ -121,7 +143,27 @@ public final class NetworkTest {
                 .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).neuron(
                         Neuron.builder().connection(0, 1.0).connection(1, -1.0).bias(-1.0),
                         Neuron.builder().connection(0, -1.0).connection(1, 1.0).bias(-1.0)))
-                .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).bias(-1.0).neuron(1.0, 1.0))
+                .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).neuronWithBias(-1.0, 1.0, 1.0))
+                .build());
+
+        networks.add(Network.builder()
+                .name(instances.relationName())
+                .inputs(WekaUtils.attributesIgnoreClass(instances))
+                .layer(Layer.builder().activationFunction(step).neuron(
+                        Neuron.builder().connection(0, 1.0).connection(1, -1.0),
+                        Neuron.builder().connection(0, -1.0).connection(1, 1.0)))
+                .layer(Layer.builder().activationFunction(ActivationFunctions.STEP).neuron(
+                        Neuron.builder().connection(0, 1.0).connection(1, 1.0).bias(-1.0)))
+                .build());
+
+        networks.add(Network.builder()
+                .name(instances.relationName())
+                .inputs(WekaUtils.attributesIgnoreClass(instances))
+                .layer(Layer.builder().activationFunction(step).neuron(
+                        Neuron.builder().connection(0, 1.0).connection(1, -1.0),
+                        Neuron.builder().connection(0, -1.0).connection(1, 1.0)))
+                .layer(Layer.builder().activationFunction(step).neuron(
+                        Neuron.builder().connection(0, 1.0).connection(1, 1.0)))
                 .build());
 
         networksClassifyInstances(instances, networks.toArray(new Network[1]));

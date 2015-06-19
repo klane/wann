@@ -1,8 +1,7 @@
 package com.github.klane.wann.core;
 
-import com.github.klane.wann.function.activation.ActivationFunction;
-import com.github.klane.wann.function.input.InputFunction;
 import com.google.common.base.Preconditions;
+import javafx.util.Builder;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,12 +11,10 @@ public final class Neuron implements Iterable<Connection> {
     private final String name;
     private final List<Connection> inputConnections;
     private final List<Connection> outputConnections;
-    private final InputFunction inputFunction;
-    private final ActivationFunction activationFunction;
     private double input;
     private double output;
 
-    private Neuron(final Builder builder) {
+    private Neuron(final NeuronBuilder builder) {
         this.name = builder.name;
         this.inputConnections = new ArrayList<>();
         this.outputConnections = new ArrayList<>();
@@ -43,21 +40,10 @@ public final class Neuron implements Iterable<Connection> {
         }
 
         this.inputConnections.forEach(c -> c.getFromNeuron().outputConnections.add(c));
-
-        if (this.inputConnections.size() > 0) {
-            Preconditions.checkNotNull(builder.inputFunction, "Must specify a neuron input function");
-        }
-
-        this.inputFunction = builder.inputFunction;
-        this.activationFunction = builder.activationFunction;
     }
 
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public ActivationFunction getActivationFunction() {
-        return this.activationFunction;
+    public static NeuronBuilder builder() {
+        return new NeuronBuilder();
     }
 
     public double getInput() {
@@ -94,44 +80,55 @@ public final class Neuron implements Iterable<Connection> {
         return this.name;
     }
 
-    void calculate() {
-        if (this.inputConnections.size() > 0) {
-            this.input = this.inputFunction.applyAsDouble(this.inputConnections);
-        }
-
-        this.output = this.activationFunction.applyAsDouble(this.input);
-    }
-
     void setInput(final double input) {
         this.input = input;
     }
 
-    public static final class Builder extends WANNBuilder<Neuron, Builder> {
+    void setOutput(final double output) {
+        this.output = output;
+    }
 
+    public static final class NeuronBuilder implements Builder<Neuron> {
+
+        private String name;
+        private Double bias;
+        private boolean biasFlag;
         private Layer layer;
         private final Map<Integer, Double> connectionMap;
 
-        private Builder() {
+        private NeuronBuilder() {
             this.connectionMap = new LinkedHashMap<>();
+        }
+
+        public NeuronBuilder bias(final boolean biasFlag) {
+            this.biasFlag = biasFlag;
+            return this;
+        }
+
+        public NeuronBuilder bias(final double bias) {
+            this.bias = bias;
+            return this.bias(true);
         }
 
         @Override
         public Neuron build() {
-            Preconditions.checkNotNull(this.activationFunction, "Must specify a neuron activation function");
             return new Neuron(this);
         }
 
-        public Builder connection(final int fromNeuronIndex, final double weight) {
+        public NeuronBuilder connection(final int fromNeuronIndex, final double weight) {
             this.connectionMap.put(fromNeuronIndex, weight);
             return this;
         }
 
-        @Override
-        Builder get() {
+        public NeuronBuilder name(final String name) {
+            if (this.name == null) {
+                this.name = name;
+            }
+
             return this;
         }
 
-        Builder layer(final Layer layer) {
+        NeuronBuilder layer(final Layer layer) {
             Preconditions.checkNotNull(layer);
             this.layer = layer;
             return this;

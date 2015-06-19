@@ -1,6 +1,8 @@
 package com.github.klane.wann.learn;
 
+import com.github.klane.wann.core.Layer;
 import com.github.klane.wann.core.Neuron;
+import com.github.klane.wann.function.activation.ActivationFunction;
 import com.github.klane.wann.function.error.ErrorFunction;
 import com.github.klane.wann.function.error.ErrorFunctions;
 import weka.core.Instance;
@@ -53,13 +55,18 @@ public class Backpropagation extends LearningRule {
 
     private void updateHiddenNeurons() {
         double error;
+        Layer layer;
+        ActivationFunction activationFunction;
 
         for (int i=super.network.size()-2; i>0; i--) {
-            for (Neuron neuron : super.network.getLayer(i)) {
+            layer = super.network.getLayer(i);
+            activationFunction = layer.getActivationFunction();
+
+            for (Neuron neuron : layer) {
                 error = neuron.getOutputConnections().stream()
                         .mapToDouble(c -> this.neuronError.get(c.getToNeuron()) * c.getWeight()).sum();
 
-                this.neuronError.put(neuron, error * neuron.getActivationFunction().derivative(neuron.getInput()));
+                this.neuronError.put(neuron, error * activationFunction.derivative(neuron.getInput()));
                 this.updateNeuronWeights(neuron);
             }
         }
@@ -67,9 +74,10 @@ public class Backpropagation extends LearningRule {
 
     private void updateOutputNeurons(final double[] error) {
         int i=0;
+        ActivationFunction activationFunction = super.output.getActivationFunction();
 
         for (Neuron neuron : super.output) {
-            this.neuronError.put(neuron, error[i] * neuron.getActivationFunction().derivative(neuron.getInput()));
+            this.neuronError.put(neuron, error[i] * activationFunction.derivative(neuron.getInput()));
             this.updateNeuronWeights(neuron);
             i++;
         }

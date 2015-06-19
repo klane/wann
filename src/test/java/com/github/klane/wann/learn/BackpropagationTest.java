@@ -6,6 +6,7 @@ import com.github.klane.wann.core.Connection;
 import com.github.klane.wann.core.Layer;
 import com.github.klane.wann.core.Network;
 import com.github.klane.wann.core.Neuron;
+import com.github.klane.wann.function.activation.ActivationFunctions;
 import org.bitbucket.klane.weka.DataSetBuilder;
 import org.bitbucket.klane.weka.InstanceBuilder;
 import org.bitbucket.klane.weka.WekaUtils;
@@ -42,10 +43,10 @@ public final class BackpropagationTest {
         Network network = Network.builder()
                 .name(instances.relationName())
                 .inputs(WekaUtils.attributesIgnoreClass(instances))
-                .layer(Layer.builder()
+                .layer(Layer.builder().activationFunction(ActivationFunctions.SIGMOID)
                         .neuron(0.1, 0.8)
                         .neuron(0.4, 0.6))
-                .layer(Layer.builder()
+                .layer(Layer.builder().activationFunction(ActivationFunctions.SIGMOID)
                         .neuron(0.3, 0.9))
                 .learningRule(new Backpropagation(1, 1.0))
                 .build();
