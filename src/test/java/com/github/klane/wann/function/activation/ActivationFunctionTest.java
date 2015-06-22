@@ -1,125 +1,73 @@
 package com.github.klane.wann.function.activation;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
 
 import org.junit.Test;
 
 public final class ActivationFunctionTest {
 
+    private static final double[] INPUT_1 = new double[] {-1, 0, 0.5, 1, 2};
+    private static final double[] INPUT_2 = new double[] {-10, 0, 10};
+    private static final double[] ONES = new double[] {1, 1, 1, 1, 1};
     private static final double TOLERANCE = 1E-4;
+    private ActivationFunction function;
 
     @Test
     public void linear() {
-        assertEquals(ActivationFunctions.LINEAR.applyAsDouble(-1), -1, 0);
-        assertEquals(ActivationFunctions.LINEAR.applyAsDouble(0), 0, 0);
-        assertEquals(ActivationFunctions.LINEAR.applyAsDouble(0.5), 0.5, 0);
-        assertEquals(ActivationFunctions.LINEAR.applyAsDouble(1), 1, 0);
-        assertEquals(ActivationFunctions.LINEAR.applyAsDouble(2), 2, 0);
+        function = ActivationFunctions.LINEAR;
 
-        assertEquals(ActivationFunctions.LINEAR.derivative(-1), 1, 0);
-        assertEquals(ActivationFunctions.LINEAR.derivative(0), 1, 0);
-        assertEquals(ActivationFunctions.LINEAR.derivative(0.5), 1, 0);
-        assertEquals(ActivationFunctions.LINEAR.derivative(1), 1, 0);
-        assertEquals(ActivationFunctions.LINEAR.derivative(2), 1, 0);
+        assertArrayEquals(function.apply(INPUT_1), INPUT_1, 0);
+        assertArrayEquals(function.derivative(INPUT_1), ONES, 0);
 
-        Linear linear = new Linear(2);
+        function = new Linear(2);
 
-        assertEquals(linear.applyAsDouble(-1), -2, 0);
-        assertEquals(linear.applyAsDouble(0), 0, 0);
-        assertEquals(linear.applyAsDouble(0.5), 1, 0);
-        assertEquals(linear.applyAsDouble(1), 2, 0);
-        assertEquals(linear.applyAsDouble(2), 4, 0);
-
-        assertEquals(linear.derivative(-1), 2, 0);
-        assertEquals(linear.derivative(0), 2, 0);
-        assertEquals(linear.derivative(0.5), 2, 0);
-        assertEquals(linear.derivative(1), 2, 0);
-        assertEquals(linear.derivative(2), 2, 0);
+        assertArrayEquals(function.apply(INPUT_1), new double[] {-2, 0, 1, 2, 4}, 0);
+        assertArrayEquals(function.derivative(INPUT_1), new double[] {2, 2, 2, 2, 2}, 0);
     }
 
     @Test
     public void logistic() {
-        assertEquals(ActivationFunctions.SIGMOID.applyAsDouble(-10), 0, TOLERANCE);
-        assertEquals(ActivationFunctions.SIGMOID.applyAsDouble(0), 0.5, 0);
-        assertEquals(ActivationFunctions.SIGMOID.applyAsDouble(10), 1, TOLERANCE);
+        function = ActivationFunctions.SIGMOID;
 
-        assertEquals(ActivationFunctions.SIGMOID.derivative(-10), 0, TOLERANCE);
-        assertEquals(ActivationFunctions.SIGMOID.derivative(0), 0.25, 0);
-        assertEquals(ActivationFunctions.SIGMOID.derivative(10), 0, TOLERANCE);
+        assertArrayEquals(function.apply(INPUT_2), new double[] {0, 0.5, 1}, TOLERANCE);
+        assertArrayEquals(function.derivative(INPUT_2), new double[] {0, 0.25, 0}, TOLERANCE);
 
-        Logistic logistic = new Logistic(2, 1, 0.5);
+        function = new Logistic(2, 1, 0.5);
 
-        assertEquals(logistic.applyAsDouble(-10), 0, TOLERANCE);
-        assertEquals(logistic.applyAsDouble(0.5), 1, 0);
-        assertEquals(logistic.applyAsDouble(20), 2, TOLERANCE);
+        assertArrayEquals(function.apply(new double[] {-10, 0.5, 20}), new double[] {0, 1, 2}, TOLERANCE);
     }
 
     @Test
     public void ramp() {
-        assertEquals(ActivationFunctions.RAMP.applyAsDouble(-1), 0, 0);
-        assertEquals(ActivationFunctions.RAMP.applyAsDouble(0), 0, 0);
-        assertEquals(ActivationFunctions.RAMP.applyAsDouble(0.5), 0.5, 0);
-        assertEquals(ActivationFunctions.RAMP.applyAsDouble(1), 1, 0);
-        assertEquals(ActivationFunctions.RAMP.applyAsDouble(2), 1, 0);
+        function = ActivationFunctions.RAMP;
 
-        assertEquals(ActivationFunctions.RAMP.derivative(-1), 1, 0);
-        assertEquals(ActivationFunctions.RAMP.derivative(0), 1, 0);
-        assertEquals(ActivationFunctions.RAMP.derivative(0.5), 1, 0);
-        assertEquals(ActivationFunctions.RAMP.derivative(1), 1, 0);
-        assertEquals(ActivationFunctions.RAMP.derivative(2), 1, 0);
+        assertArrayEquals(function.apply(INPUT_1), new double[] {0, 0, 0.5, 1, 1}, 0);
+        assertArrayEquals(function.derivative(INPUT_1), ONES, 0);
 
-        Ramp ramp = new Ramp(-1, 1.5, -2, 8);
+        function = new Ramp(-1, 1.5, -2, 8);
 
-        assertEquals(ramp.applyAsDouble(-1), -2, 0);
-        assertEquals(ramp.applyAsDouble(0), 2, 0);
-        assertEquals(ramp.applyAsDouble(0.5), 4, 0);
-        assertEquals(ramp.applyAsDouble(1), 6, 0);
-        assertEquals(ramp.applyAsDouble(2), 8, 0);
-
-        assertEquals(ramp.derivative(-1), 1, 0);
-        assertEquals(ramp.derivative(0), 1, 0);
-        assertEquals(ramp.derivative(0.5), 1, 0);
-        assertEquals(ramp.derivative(1), 1, 0);
-        assertEquals(ramp.derivative(2), 1, 0);
+        assertArrayEquals(function.apply(INPUT_1), new double[] {-2, 2, 4, 6, 8}, 0);
+        assertArrayEquals(function.derivative(INPUT_1), ONES, 0);
     }
 
     @Test
     public void step() {
-        assertEquals(ActivationFunctions.STEP.applyAsDouble(-1), 0, 0);
-        assertEquals(ActivationFunctions.STEP.applyAsDouble(0), 1, 0);
-        assertEquals(ActivationFunctions.STEP.applyAsDouble(0.5), 1, 0);
-        assertEquals(ActivationFunctions.STEP.applyAsDouble(1), 1, 0);
-        assertEquals(ActivationFunctions.STEP.applyAsDouble(2), 1, 0);
+        function = ActivationFunctions.STEP;
 
-        assertEquals(ActivationFunctions.STEP.derivative(-1), 1, 0);
-        assertEquals(ActivationFunctions.STEP.derivative(0), 1, 0);
-        assertEquals(ActivationFunctions.STEP.derivative(0.5), 1, 0);
-        assertEquals(ActivationFunctions.STEP.derivative(1), 1, 0);
-        assertEquals(ActivationFunctions.STEP.derivative(2), 1, 0);
+        assertArrayEquals(function.apply(INPUT_1), new double[] {0, 1, 1, 1, 1}, 0);
+        assertArrayEquals(function.derivative(INPUT_1), ONES, 0);
 
-        Step step = new Step(-1, 2, 1);
+        function = new Step(-1, 2, 1);
 
-        assertEquals(step.applyAsDouble(-1), -1, 0);
-        assertEquals(step.applyAsDouble(0), -1, 0);
-        assertEquals(step.applyAsDouble(0.5), -1, 0);
-        assertEquals(step.applyAsDouble(1), 2, 0);
-        assertEquals(step.applyAsDouble(2), 2, 0);
-
-        assertEquals(step.derivative(-1), 1, 0);
-        assertEquals(step.derivative(0), 1, 0);
-        assertEquals(step.derivative(0.5), 1, 0);
-        assertEquals(step.derivative(1), 1, 0);
-        assertEquals(step.derivative(2), 1, 0);
+        assertArrayEquals(function.apply(INPUT_1), new double[] {-1, -1, -1, 2, 2}, 0);
+        assertArrayEquals(function.derivative(INPUT_1), ONES, 0);
     }
 
     @Test
     public void tanh() {
-        assertEquals(ActivationFunctions.TANH.applyAsDouble(-10), -1, TOLERANCE);
-        assertEquals(ActivationFunctions.TANH.applyAsDouble(0),0, 0);
-        assertEquals(ActivationFunctions.TANH.applyAsDouble(10), 1, TOLERANCE);
+        function = ActivationFunctions.TANH;
 
-        assertEquals(ActivationFunctions.TANH.derivative(-10), 0, TOLERANCE);
-        assertEquals(ActivationFunctions.TANH.derivative(0), 1, 0);
-        assertEquals(ActivationFunctions.TANH.derivative(10), 0, TOLERANCE);
+        assertArrayEquals(function.apply(INPUT_2), new double[] {-1, 0, 1}, TOLERANCE);
+        assertArrayEquals(function.derivative(INPUT_2), new double[] {0, 1, 0}, TOLERANCE);
     }
 }

@@ -13,7 +13,13 @@ public final class Step implements ActivationFunction {
     }
 
     @Override
-    public double applyAsDouble(final double input) {
-        return (input >= this.threshold) ? this.max : this.min;
+    public double[] apply(final double[] input) {
+        double[] output = new double[input.length];
+
+        for (int i=0; i<input.length; i++) {
+            output[i] = (input[i] >= this.threshold) ? this.max : this.min;
+        }
+
+        return output;
     }
 }

@@ -19,13 +19,19 @@ public final class Ramp implements ActivationFunction {
     }
 
     @Override
-    public double applyAsDouble(final double input) {
-        if (input <= this.xMin) {
-            return this.yMin;
-        } else if (input >= this.xMax) {
-            return this.yMax;
+    public double[] apply(final double[] input) {
+        double[] output = new double[input.length];
+
+        for (int i=0; i<input.length; i++) {
+            if (input[i] <= this.xMin) {
+                output[i] = this.yMin;
+            } else if (input[i] >= this.xMax) {
+                output[i] = this.yMax;
+            } else {
+                output[i] = this.slope * input[i] + this.intercept;
+            }
         }
 
-        return this.slope * input + this.intercept;
+        return output;
     }
 }

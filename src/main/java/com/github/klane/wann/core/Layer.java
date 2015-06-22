@@ -53,6 +53,10 @@ public final class Layer implements Iterable<Neuron> {
         return this.activationFunction;
     }
 
+    public double[] getInput() {
+        return this.neurons.stream().mapToDouble(Neuron::getInput).toArray();
+    }
+
     public String getName() {
         return this.name;
     }
@@ -84,7 +88,12 @@ public final class Layer implements Iterable<Neuron> {
             this.neurons.forEach(n -> n.setInput(this.inputFunction.applyAsDouble(n.getInputConnections())));
         }
 
-        this.neurons.forEach(n -> n.setOutput(this.activationFunction.applyAsDouble(n.getInput())));
+        int i=0;
+        double[] output = this.activationFunction.apply(this.getInput());
+
+        for (Neuron n : this) {
+            n.setOutput(output[i++]);
+        }
     }
 
     public static final class LayerBuilder implements Builder<Layer> {
