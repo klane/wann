@@ -23,6 +23,7 @@ public final class BackpropagationTest {
     @Test
     public void backpropagation() {
         Layer layer;
+        double[] layerInput;
         Neuron neuron;
         List<Connection> connections;
         double x = 0.35;
@@ -55,12 +56,13 @@ public final class BackpropagationTest {
 
         for (int i=0; i<network.size(); i++) {
             layer = network.getLayer(i);
+            layerInput = layer.getInput();
 
             for (int j=0; j<layer.size(); j++) {
                 neuron = layer.get(j);
 
-                assertEquals(neuron.getInput(), input[i][j], TOLERANCE);
-                assertEquals(neuron.getOutput(), output[i][j], TOLERANCE);
+                assertEquals(layerInput[j], input[i][j], TOLERANCE);
+                assertEquals(neuron.getValue(), output[i][j], TOLERANCE);
 
                 if (i > 0) {
                     connections = neuron.getInputConnections();

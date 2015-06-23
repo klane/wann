@@ -11,8 +11,7 @@ public final class Neuron implements Iterable<Connection> {
     private final String name;
     private final List<Connection> inputConnections;
     private final List<Connection> outputConnections;
-    private double input;
-    private double output;
+    private double value;
 
     private Neuron(final NeuronBuilder builder) {
         this.name = builder.name;
@@ -46,10 +45,6 @@ public final class Neuron implements Iterable<Connection> {
         return new NeuronBuilder();
     }
 
-    public double getInput() {
-        return this.input;
-    }
-
     public List<Connection> getInputConnections() {
         return new ArrayList<>(this.inputConnections);
     }
@@ -58,12 +53,12 @@ public final class Neuron implements Iterable<Connection> {
         return this.name;
     }
 
-    public double getOutput() {
-        return this.output;
-    }
-
     public List<Connection> getOutputConnections() {
         return new ArrayList<>(this.outputConnections);
+    }
+
+    public double getValue() {
+        return this.value;
     }
 
     public double[] getWeights() {
@@ -80,12 +75,8 @@ public final class Neuron implements Iterable<Connection> {
         return this.name;
     }
 
-    void setInput(final double input) {
-        this.input = input;
-    }
-
-    void setOutput(final double output) {
-        this.output = output;
+    void setValue(final double value) {
+        this.value = value;
     }
 
     public static final class NeuronBuilder implements Builder<Neuron> {

@@ -48,7 +48,7 @@ public final class InputFunctionTest {
             max = 0;
 
             for (Connection c : connections) {
-                max = Math.max(max, c.getWeightedInput());
+                max = Math.max(max, c.getWeightedValue());
             }
 
             assertEquals(InputFunctions.WEIGHTED_MAX.applyAsDouble(connections), max, 0);
@@ -64,7 +64,7 @@ public final class InputFunctionTest {
             sum = 0;
 
             for (Connection c : connections) {
-                sum += c.getWeightedInput();
+                sum += c.getWeightedValue();
             }
 
             assertEquals(InputFunctions.WEIGHTED_MEAN.applyAsDouble(connections), sum / connections.size(), 0);
@@ -80,7 +80,7 @@ public final class InputFunctionTest {
             sum = 0;
 
             for (Connection c : connections) {
-                sum += c.getWeightedInput();
+                sum += c.getWeightedValue();
             }
 
             assertEquals(InputFunctions.WEIGHTED_SUM.applyAsDouble(connections), sum, 0);

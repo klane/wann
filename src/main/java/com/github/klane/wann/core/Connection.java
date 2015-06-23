@@ -25,20 +25,20 @@ public final class Connection {
         return this.fromNeuron;
     }
 
-    public double getInput() {
-        return this.fromNeuron.getOutput();
-    }
-
     public Neuron getToNeuron() {
         return this.toNeuron;
+    }
+
+    public double getValue() {
+        return this.fromNeuron.getValue();
     }
 
     public double getWeight() {
         return this.weight;
     }
 
-    public double getWeightedInput() {
-        return this.fromNeuron.getOutput() * this.weight;
+    public double getWeightedValue() {
+        return this.fromNeuron.getValue() * this.weight;
     }
 
     @Override

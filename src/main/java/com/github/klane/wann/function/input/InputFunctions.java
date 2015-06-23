@@ -6,9 +6,9 @@ import java.util.List;
 
 public enum InputFunctions implements InputFunction {
 
-    WEIGHTED_MAX(conn -> conn.stream().mapToDouble(Connection::getWeightedInput).max().getAsDouble()),
-    WEIGHTED_MEAN(conn -> conn.stream().mapToDouble(Connection::getWeightedInput).average().getAsDouble()),
-    WEIGHTED_SUM(conn -> conn.stream().mapToDouble(Connection::getWeightedInput).sum());
+    WEIGHTED_MAX(conn -> conn.stream().mapToDouble(Connection::getWeightedValue).max().getAsDouble()),
+    WEIGHTED_MEAN(conn -> conn.stream().mapToDouble(Connection::getWeightedValue).average().getAsDouble()),
+    WEIGHTED_SUM(conn -> conn.stream().mapToDouble(Connection::getWeightedValue).sum());
 
     private final InputFunction function;
 

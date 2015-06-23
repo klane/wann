@@ -87,6 +87,6 @@ public class Backpropagation extends LearningRule {
     void updateNeuronWeights(final Neuron neuron) {
         final double error = this.neuronError.get(neuron);
 
-        neuron.getInputConnections().forEach(c -> c.updateWeight(this.learningRate * error * c.getInput()));
+        neuron.getInputConnections().forEach(c -> c.updateWeight(this.learningRate * error * c.getValue()));
     }
 }

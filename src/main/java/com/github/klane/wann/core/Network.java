@@ -31,7 +31,7 @@ public final class Network extends Classifier implements Iterable<Layer> {
         this.learningRule = builder.learningRule;
 
         this.bias = Neuron.builder().name("Bias").build();
-        this.bias.setOutput(1);
+        this.bias.setValue(1);
 
         this.inputLayer = Layer.builder()
                 .name("Input Layer")
@@ -86,7 +86,8 @@ public final class Network extends Classifier implements Iterable<Layer> {
     @Override
     public double[] distributionForInstance(final Instance instance) {
         Preconditions.checkNotNull(instance);
-        int i=0;
+        int i=0, index=0;
+        double[] input = new double[this.inputLayer.size()];
 
         for (Neuron neuron : this.inputLayer) {
             Attribute a = instance.attribute(i);
@@ -95,20 +96,21 @@ public final class Network extends Classifier implements Iterable<Layer> {
             if ((a.isNumeric() || a.numValues() < 3) ? neuron.getName().contains(a.name()) :
                     neuron.getName().contains(WekaUtils.values(a).get((int) instance.value(i)))) {
                 if (a.isNumeric() || a.numValues() < 3) {
-                    neuron.setInput(instance.value(i));
+                    input[index++] = instance.value(i);
                 } else {
-                    neuron.setInput(1);
+                    input[index++] = 1;
                 }
 
                 i++;
             } else {
-                neuron.setInput(0);
+                input[index++] = 0;
             }
         }
 
+        this.inputLayer.setInput(input);
         this.calculate();
 
-        return this.outputLayer.neurons.stream().mapToDouble(Neuron::getOutput).toArray();
+        return this.outputLayer.neurons.stream().mapToDouble(Neuron::getValue).toArray();
     }
 
     public double[] getEpochError() {

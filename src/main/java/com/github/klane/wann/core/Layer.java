@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 public final class Layer implements Iterable<Neuron> {
 
     private final String name;
+    private double[] input;
     private final InputFunction inputFunction;
     private final ActivationFunction activationFunction;
     private final Layer previous;
@@ -38,6 +39,8 @@ public final class Layer implements Iterable<Neuron> {
                         .name("L" + this.name.charAt(this.name.length() - 1) + "N" + (builder.neurons.indexOf(b) + 1))
                         .build())
                 .collect(Collectors.toList());
+
+        this.input = new double[this.neurons.size()];
     }
 
     public static LayerBuilder builder() {
@@ -54,7 +57,7 @@ public final class Layer implements Iterable<Neuron> {
     }
 
     public double[] getInput() {
-        return this.neurons.stream().mapToDouble(Neuron::getInput).toArray();
+        return input;
     }
 
     public String getName() {
@@ -84,16 +87,27 @@ public final class Layer implements Iterable<Neuron> {
     }
 
     void calculate() {
+        int i;
+        double[] output;
+
         if (this.inputFunction != null) {
-            this.neurons.forEach(n -> n.setInput(this.inputFunction.applyAsDouble(n.getInputConnections())));
+            i=0;
+
+            for (Neuron n : this) {
+                this.input[i++] = this.inputFunction.applyAsDouble(n.getInputConnections());
+            }
         }
 
-        int i=0;
-        double[] output = this.activationFunction.apply(this.getInput());
+        i=0;
+        output = this.activationFunction.apply(this.input);
 
         for (Neuron n : this) {
-            n.setOutput(output[i++]);
+            n.setValue(output[i++]);
         }
+    }
+
+    void setInput(final double[] input) {
+        this.input = Arrays.copyOf(input, input.length);
     }
 
     public static final class LayerBuilder implements Builder<Layer> {
