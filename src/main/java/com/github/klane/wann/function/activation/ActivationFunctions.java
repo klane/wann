@@ -5,6 +5,21 @@ public enum ActivationFunctions implements ActivationFunction {
     LINEAR(new Linear(1)),
     RAMP(new Ramp(0, 1, 0, 1)),
     SIGMOID(new Logistic(1, 1, 0)),
+    SOFTMAX(input -> {
+        double sum = 0;
+        double[] output = new double[input.length];
+
+        for (int i=0; i<input.length; i++) {
+            output[i] = Math.exp(input[i]);
+            sum += output[i];
+        }
+
+        for (int i=0; i<input.length; i++) {
+            output[i] /= sum;
+        }
+
+        return output;
+    }),
     STEP(new Step(0, 1, 0)),
     TANH(new ActivationFunction() {
         @Override

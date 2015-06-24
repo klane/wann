@@ -55,7 +55,7 @@ public final class Network extends Classifier implements Iterable<Layer> {
                 .name("Output Layer")
                 .network(this)
                 .inputFunction(InputFunctions.WEIGHTED_SUM)
-                .activationFunction(ActivationFunctions.LINEAR);
+                .activationFunction(ActivationFunctions.SOFTMAX);
 
         if (builder.outputValues.isEmpty()) {
             List<Neuron.NeuronBuilder> neurons = builder.layers.get(builder.layers.size()-1).neurons;

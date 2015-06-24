@@ -51,6 +51,21 @@ public final class ActivationFunctionTest {
     }
 
     @Test
+    public void softmax() {
+        int n = 10;
+        double[] output = new double[n];
+
+        for (int i=0; i<n; i++) {
+            output[i] = 1.0 / n;
+        }
+
+        function = ActivationFunctions.SOFTMAX;
+        
+        assertArrayEquals(function.apply(new double[n]), output, 0);
+        assertArrayEquals(function.derivative(INPUT_1), ONES, 0);
+    }
+
+    @Test
     public void step() {
         function = ActivationFunctions.STEP;
 
