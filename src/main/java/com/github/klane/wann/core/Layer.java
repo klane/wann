@@ -12,6 +12,7 @@ public final class Layer implements Iterable<Neuron> {
 
     private final String name;
     private double[] input;
+    private double[] output;
     private final InputFunction inputFunction;
     private final ActivationFunction activationFunction;
     private final Layer previous;
@@ -41,6 +42,7 @@ public final class Layer implements Iterable<Neuron> {
                 .collect(Collectors.toList());
 
         this.input = new double[this.neurons.size()];
+        this.output = new double[this.neurons.size()];
     }
 
     public static LayerBuilder builder() {
@@ -57,7 +59,7 @@ public final class Layer implements Iterable<Neuron> {
     }
 
     public double[] getInput() {
-        return input;
+        return this.input;
     }
 
     public String getName() {
@@ -66,6 +68,10 @@ public final class Layer implements Iterable<Neuron> {
 
     public Layer getNext() {
         return this.next;
+    }
+
+    public double[] getOutput() {
+        return this.output;
     }
 
     public Layer getPrevious() {
@@ -88,7 +94,6 @@ public final class Layer implements Iterable<Neuron> {
 
     void calculate() {
         int i;
-        double[] output;
 
         if (this.inputFunction != null) {
             i=0;
@@ -99,10 +104,10 @@ public final class Layer implements Iterable<Neuron> {
         }
 
         i=0;
-        output = this.activationFunction.apply(this.input);
+        this.output = this.activationFunction.apply(this.input);
 
         for (Neuron n : this) {
-            n.setValue(output[i++]);
+            n.setValue(this.output[i++]);
         }
     }
 

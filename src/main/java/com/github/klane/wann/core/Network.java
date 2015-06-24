@@ -86,7 +86,8 @@ public final class Network extends Classifier implements Iterable<Layer> {
     @Override
     public double[] distributionForInstance(final Instance instance) {
         Preconditions.checkNotNull(instance);
-        int i=0, index=0;
+        int i=0;
+        int index=0;
         double[] input = new double[this.inputLayer.size()];
 
         for (Neuron neuron : this.inputLayer) {
@@ -110,7 +111,7 @@ public final class Network extends Classifier implements Iterable<Layer> {
         this.inputLayer.setInput(input);
         this.calculate();
 
-        return this.outputLayer.neurons.stream().mapToDouble(Neuron::getValue).toArray();
+        return this.outputLayer.getOutput();
     }
 
     public double[] getEpochError() {
