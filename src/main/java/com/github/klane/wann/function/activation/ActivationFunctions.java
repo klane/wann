@@ -2,7 +2,7 @@ package com.github.klane.wann.function.activation;
 
 public enum ActivationFunctions implements ActivationFunction {
 
-    LINEAR(new Linear(1)),
+    IDENTITY(new Linear(1)),
     RAMP(new Ramp(0, 1, 0, 1)),
     SIGMOID(new Logistic(1, 1, 0)),
     SOFTMAX(input -> {

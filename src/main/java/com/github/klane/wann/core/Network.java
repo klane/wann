@@ -36,7 +36,7 @@ public final class Network extends Classifier implements Iterable<Layer> {
         this.inputLayer = Layer.builder()
                 .name("Input Layer")
                 .network(this)
-                .activationFunction(ActivationFunctions.LINEAR)
+                .activationFunction(ActivationFunctions.IDENTITY)
                 .neuron(builder.inputValues.stream().map(s -> Neuron.builder().name(s)).collect(Collectors.toList()))
                 .build();
 

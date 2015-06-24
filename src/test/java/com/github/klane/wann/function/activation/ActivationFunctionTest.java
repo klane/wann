@@ -14,7 +14,7 @@ public final class ActivationFunctionTest {
 
     @Test
     public void linear() {
-        function = ActivationFunctions.LINEAR;
+        function = ActivationFunctions.IDENTITY;
 
         assertArrayEquals(function.apply(INPUT_1), INPUT_1, 0);
         assertArrayEquals(function.derivative(INPUT_1), ONES, 0);
@@ -60,7 +60,7 @@ public final class ActivationFunctionTest {
         }
 
         function = ActivationFunctions.SOFTMAX;
-        
+
         assertArrayEquals(function.apply(new double[n]), output, 0);
         assertArrayEquals(function.derivative(INPUT_1), ONES, 0);
     }
