@@ -2,8 +2,8 @@ apply plugin: 'java'
 apply plugin: 'com.bmuschko.nexus'
 apply plugin: 'com.github.ben-manes.versions'
 
-group = 'com.github.klane'
-version = '1.0-SNAPSHOT'
+group 'com.github.klane'
+version '1.0-SNAPSHOT'
 
 def compatibilityVersion = 1.8
 sourceCompatibility = compatibilityVersion
@@ -16,7 +16,7 @@ buildscript {
 
     dependencies {
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
     }
 }
 
@@ -48,6 +48,12 @@ javadoc {
         links 'http://download.java.net/jdk8/jfxdocs/'
         links 'http://weka.sourceforge.net/doc.stable/'
     }
+}
+
+extraArchive {
+    sources = true
+    tests = false
+    javadoc = true
 }
 
 nexus {
