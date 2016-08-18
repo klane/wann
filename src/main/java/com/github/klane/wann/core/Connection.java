@@ -1,40 +1,23 @@
 package com.github.klane.wann.core;
 
-import com.google.common.base.Preconditions;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NonNull;
 
+@AllArgsConstructor
 public final class Connection {
 
-    private final Neuron fromNeuron;
-    private final Neuron toNeuron;
-    private double weight;
+    // TODO Check that NonNull is implemented
+    @Getter @NonNull private final Neuron fromNeuron;
+    @Getter @NonNull private final Neuron toNeuron;
+    @Getter private double weight;
 
     Connection(final Neuron fromNeuron, final Neuron toNeuron) {
         this(fromNeuron, toNeuron, 2*Math.random() - 1);
     }
 
-    Connection(final Neuron fromNeuron, final Neuron toNeuron, final double weight) {
-        Preconditions.checkNotNull(fromNeuron);
-        Preconditions.checkNotNull(toNeuron);
-
-        this.fromNeuron = fromNeuron;
-        this.toNeuron = toNeuron;
-        this.weight = weight;
-    }
-
-    public Neuron getFromNeuron() {
-        return this.fromNeuron;
-    }
-
-    public Neuron getToNeuron() {
-        return this.toNeuron;
-    }
-
     public double getValue() {
         return this.fromNeuron.getValue();
-    }
-
-    public double getWeight() {
-        return this.weight;
     }
 
     public double getWeightedValue() {

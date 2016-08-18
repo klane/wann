@@ -2,16 +2,19 @@ package com.github.klane.wann.core;
 
 import com.google.common.base.Preconditions;
 import javafx.util.Builder;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public final class Neuron implements Iterable<Connection> {
 
-    private final String name;
+    @Getter private final String name;
     private final List<Connection> inputConnections;
     private final List<Connection> outputConnections;
-    private double value;
+    @Getter @Setter(AccessLevel.PACKAGE) private double value;
 
     private Neuron(final NeuronBuilder builder) {
         this.name = builder.name;
@@ -49,16 +52,8 @@ public final class Neuron implements Iterable<Connection> {
         return new ArrayList<>(this.inputConnections);
     }
 
-    public String getName() {
-        return this.name;
-    }
-
     public List<Connection> getOutputConnections() {
         return new ArrayList<>(this.outputConnections);
-    }
-
-    public double getValue() {
-        return this.value;
     }
 
     public double[] getWeights() {
@@ -73,10 +68,6 @@ public final class Neuron implements Iterable<Connection> {
     @Override
     public String toString() {
         return this.name;
-    }
-
-    void setValue(final double value) {
-        this.value = value;
     }
 
     public static final class NeuronBuilder implements Builder<Neuron> {

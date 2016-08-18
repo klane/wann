@@ -5,6 +5,7 @@ import com.github.klane.wann.function.input.InputFunctions;
 import com.github.klane.wann.learn.LearningRule;
 import com.google.common.base.Preconditions;
 import javafx.util.Builder;
+import lombok.Getter;
 import org.bitbucket.klane.weka.WekaUtils;
 import weka.classifiers.Classifier;
 import weka.core.Attribute;
@@ -17,9 +18,9 @@ import java.util.stream.IntStream;
 
 public final class Network extends Classifier implements Iterable<Layer> {
 
-    private final String name;
-    private final Layer inputLayer;
-    private final Layer outputLayer;
+    @Getter private final String name;
+    @Getter private final Layer inputLayer;
+    @Getter private final Layer outputLayer;
     private final List<Layer> layers;
     private final LearningRule learningRule;
     private double[] epochError;
@@ -118,21 +119,9 @@ public final class Network extends Classifier implements Iterable<Layer> {
         return (this.epochError != null) ? Arrays.copyOf(this.epochError, this.epochError.length) : new double[0];
     }
 
-    public Layer getInputLayer() {
-        return this.inputLayer;
-    }
-
     public Layer getLayer(int i) {
         Preconditions.checkElementIndex(i, this.layers.size(), "Invalid layer index");
         return this.layers.get(i);
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public Layer getOutputLayer() {
-        return this.outputLayer;
     }
 
     @Override

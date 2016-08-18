@@ -4,19 +4,20 @@ import com.github.klane.wann.function.activation.ActivationFunction;
 import com.github.klane.wann.function.input.InputFunction;
 import com.google.common.base.Preconditions;
 import javafx.util.Builder;
+import lombok.Getter;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public final class Layer implements Iterable<Neuron> {
 
-    private final String name;
-    private double[] input;
-    private double[] output;
+    @Getter private final String name;
+    @Getter private double[] input;
+    @Getter private double[] output;
     private final InputFunction inputFunction;
-    private final ActivationFunction activationFunction;
-    private final Layer previous;
-    private Layer next;
+    @Getter private final ActivationFunction activationFunction;
+    @Getter private final Layer previous;
+    @Getter private Layer next;
     final Network network;
     final List<Neuron> neurons;
 
@@ -52,30 +53,6 @@ public final class Layer implements Iterable<Neuron> {
     public Neuron get(int i) {
         Preconditions.checkElementIndex(i, this.neurons.size(), "Invalid neuron index");
         return this.neurons.get(i);
-    }
-
-    public ActivationFunction getActivationFunction() {
-        return this.activationFunction;
-    }
-
-    public double[] getInput() {
-        return this.input;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public Layer getNext() {
-        return this.next;
-    }
-
-    public double[] getOutput() {
-        return this.output;
-    }
-
-    public Layer getPrevious() {
-        return this.previous;
     }
 
     @Override
