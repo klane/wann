@@ -1,12 +1,11 @@
 package com.github.klane.wann.function.activation;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public final class Linear implements ActivationFunction {
 
     private final double slope;
-
-    public Linear(final double slope) {
-        this.slope = slope;
-    }
 
     @Override
     public double[] apply(final double[] input) {

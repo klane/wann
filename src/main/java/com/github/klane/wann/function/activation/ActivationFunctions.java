@@ -1,5 +1,8 @@
 package com.github.klane.wann.function.activation;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public enum ActivationFunctions implements ActivationFunction {
 
     IDENTITY(new Linear(1)),
@@ -46,10 +49,6 @@ public enum ActivationFunctions implements ActivationFunction {
     });
 
     private final ActivationFunction function;
-
-    ActivationFunctions(final ActivationFunction function) {
-        this.function = function;
-    }
 
     public double[] apply(final double[] input) {
         return this.function.apply(input);
