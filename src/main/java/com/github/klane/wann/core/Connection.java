@@ -1,10 +1,11 @@
 package com.github.klane.wann.core;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public final class Connection {
 
     // TODO Check that NonNull is implemented
