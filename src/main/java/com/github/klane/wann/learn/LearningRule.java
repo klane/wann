@@ -3,8 +3,8 @@ package com.github.klane.wann.learn;
 import com.github.klane.wann.core.Layer;
 import com.github.klane.wann.core.Network;
 import com.github.klane.wann.function.error.ErrorFunction;
+import com.github.klane.wann.util.WekaUtils;
 import com.google.common.base.Preconditions;
-import org.bitbucket.klane.weka.WekaUtils;
 import weka.core.Instance;
 import weka.core.Instances;
 

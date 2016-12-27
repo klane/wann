@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import com.github.klane.wann.function.activation.ActivationFunctions;
 import com.github.klane.wann.function.activation.Step;
-import org.bitbucket.klane.weka.DataSetBuilder;
-import org.bitbucket.klane.weka.WekaUtils;
+import com.github.klane.wann.util.DataSetBuilder;
+import com.github.klane.wann.util.WekaUtils;
 import org.junit.Test;
 import weka.core.Instance;
 import weka.core.Instances;
