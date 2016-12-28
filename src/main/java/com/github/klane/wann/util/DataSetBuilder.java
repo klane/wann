@@ -3,7 +3,6 @@ package com.github.klane.wann.util;
 import com.google.common.base.Preconditions;
 import javafx.util.Builder;
 import weka.core.Attribute;
-import weka.core.FastVector;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader;
 import weka.core.converters.ArffSaver;
@@ -16,7 +15,7 @@ import java.util.Collection;
 
 public final class DataSetBuilder implements Builder<Instances> {
 
-    private final FastVector attributes;
+    private final ArrayList<Attribute> attributes;
     private final Collection<InstanceBuilder> instances;
     private Attribute classAttribute;
     private int classIndex;
@@ -25,7 +24,7 @@ public final class DataSetBuilder implements Builder<Instances> {
     private File arffSave;
 
     public DataSetBuilder() {
-        this.attributes = new FastVector();
+        this.attributes = new ArrayList<>();
         this.instances = new ArrayList<>();
         this.classAttribute = null;
         this.classIndex = -1;
@@ -43,7 +42,7 @@ public final class DataSetBuilder implements Builder<Instances> {
 
     public DataSetBuilder addAttribute(final Collection<Attribute> attributes) {
         Preconditions.checkNotNull(attributes);
-        attributes.stream().forEach(this.attributes::addElement);
+        this.attributes.addAll(attributes);
         return this;
     }
 

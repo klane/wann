@@ -3,6 +3,7 @@ package com.github.klane.wann.util;
 import com.google.common.base.Preconditions;
 import com.google.common.primitives.Doubles;
 import javafx.util.Builder;
+import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -44,7 +45,7 @@ public final class InstanceBuilder implements Builder<Instance> {
 
     @Override
     public Instance build() {
-        Instance instance = new Instance(this.values.size());
+        Instance instance = new DenseInstance(this.values.size());
         instance.setDataset(this.dataSet);
 
         for (int i=0; i<this.values.size(); i++) {

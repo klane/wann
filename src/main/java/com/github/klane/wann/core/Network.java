@@ -7,7 +7,7 @@ import com.github.klane.wann.util.WekaUtils;
 import com.google.common.base.Preconditions;
 import javafx.util.Builder;
 import lombok.Getter;
-import weka.classifiers.Classifier;
+import weka.classifiers.AbstractClassifier;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public final class Network extends Classifier implements Iterable<Layer> {
+public final class Network extends AbstractClassifier implements Iterable<Layer> {
 
     @Getter private final String name;
     @Getter private final Layer inputLayer;
