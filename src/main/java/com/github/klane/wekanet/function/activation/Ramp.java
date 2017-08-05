@@ -1,4 +1,4 @@
-package com.github.klane.wann.function.activation;
+package com.github.klane.wekanet.function.activation;
 
 public final class Ramp implements ActivationFunction {
 

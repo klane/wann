@@ -1,15 +1,15 @@
-package com.github.klane.wann.learn;
+package com.github.klane.wekanet.learn;
 
 import static org.junit.Assert.assertEquals;
 
-import com.github.klane.wann.core.Connection;
-import com.github.klane.wann.core.Layer;
-import com.github.klane.wann.core.Network;
-import com.github.klane.wann.core.Neuron;
-import com.github.klane.wann.function.activation.ActivationFunctions;
-import com.github.klane.wann.util.DataSetBuilder;
-import com.github.klane.wann.util.InstanceBuilder;
-import com.github.klane.wann.util.WekaUtils;
+import com.github.klane.wekanet.core.Connection;
+import com.github.klane.wekanet.core.Layer;
+import com.github.klane.wekanet.core.Network;
+import com.github.klane.wekanet.core.Neuron;
+import com.github.klane.wekanet.function.activation.ActivationFunctions;
+import com.github.klane.wekanet.util.DataSetBuilder;
+import com.github.klane.wekanet.util.InstanceBuilder;
+import com.github.klane.wekanet.util.WekaUtils;
 import org.junit.Test;
 import weka.core.Attribute;
 import weka.core.Instances;

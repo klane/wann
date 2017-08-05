@@ -1,4 +1,4 @@
-package com.github.klane.wann.core;
+package com.github.klane.wekanet.core;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

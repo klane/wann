@@ -1,7 +1,7 @@
-package com.github.klane.wann.learn;
+package com.github.klane.wekanet.learn;
 
-import com.github.klane.wann.core.Connection;
-import com.github.klane.wann.core.Neuron;
+import com.github.klane.wekanet.core.Connection;
+import com.github.klane.wekanet.core.Neuron;
 
 import java.util.HashMap;
 import java.util.Map;

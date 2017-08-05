@@ -1,9 +1,9 @@
-package com.github.klane.wann.learn;
+package com.github.klane.wekanet.learn;
 
-import com.github.klane.wann.core.Layer;
-import com.github.klane.wann.core.Network;
-import com.github.klane.wann.function.error.ErrorFunction;
-import com.github.klane.wann.util.WekaUtils;
+import com.github.klane.wekanet.core.Layer;
+import com.github.klane.wekanet.core.Network;
+import com.github.klane.wekanet.function.error.ErrorFunction;
+import com.github.klane.wekanet.util.WekaUtils;
 import com.google.common.base.Preconditions;
 import weka.core.Instance;
 import weka.core.Instances;

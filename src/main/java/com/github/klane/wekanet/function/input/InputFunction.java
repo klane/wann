@@ -1,6 +1,6 @@
-package com.github.klane.wann.function.input;
+package com.github.klane.wekanet.function.input;
 
-import com.github.klane.wann.core.Connection;
+import com.github.klane.wekanet.core.Connection;
 
 import java.util.List;
 import java.util.function.ToDoubleFunction;

@@ -1,11 +1,11 @@
-package com.github.klane.wann.core;
+package com.github.klane.wekanet.core;
 
 import static org.junit.Assert.assertEquals;
 
-import com.github.klane.wann.function.activation.ActivationFunctions;
-import com.github.klane.wann.function.activation.Step;
-import com.github.klane.wann.util.DataSetBuilder;
-import com.github.klane.wann.util.WekaUtils;
+import com.github.klane.wekanet.function.activation.ActivationFunctions;
+import com.github.klane.wekanet.function.activation.Step;
+import com.github.klane.wekanet.util.DataSetBuilder;
+import com.github.klane.wekanet.util.WekaUtils;
 import org.junit.Test;
 import weka.core.Instance;
 import weka.core.Instances;

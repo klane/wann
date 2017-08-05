@@ -1,4 +1,4 @@
-package com.github.klane.wann.util;
+package com.github.klane.wekanet.util;
 
 import com.google.common.base.Preconditions;
 import com.google.common.primitives.Doubles;

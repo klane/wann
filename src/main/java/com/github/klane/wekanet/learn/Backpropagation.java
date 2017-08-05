@@ -1,9 +1,9 @@
-package com.github.klane.wann.learn;
+package com.github.klane.wekanet.learn;
 
-import com.github.klane.wann.core.Layer;
-import com.github.klane.wann.core.Neuron;
-import com.github.klane.wann.function.error.ErrorFunction;
-import com.github.klane.wann.function.error.ErrorFunctions;
+import com.github.klane.wekanet.core.Layer;
+import com.github.klane.wekanet.core.Neuron;
+import com.github.klane.wekanet.function.error.ErrorFunction;
+import com.github.klane.wekanet.function.error.ErrorFunctions;
 import weka.core.Instance;
 
 import java.util.HashMap;

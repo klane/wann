@@ -1,4 +1,4 @@
 /**
  * Network error functions.
  */
-package com.github.klane.wann.function.error;
+package com.github.klane.wekanet.function.error;

@@ -1,4 +1,4 @@
-package com.github.klane.wann.core;
+package com.github.klane.wekanet.core;
 
 import com.google.common.base.Preconditions;
 import javafx.util.Builder;

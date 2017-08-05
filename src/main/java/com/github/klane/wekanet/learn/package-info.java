@@ -1,4 +1,4 @@
 /**
  * Network learning algorithms.
  */
-package com.github.klane.wann.learn;
+package com.github.klane.wekanet.learn;

@@ -1,4 +1,4 @@
-package com.github.klane.wann.util;
+package com.github.klane.wekanet.util;
 
 import weka.core.Attribute;
 import weka.core.Instance;

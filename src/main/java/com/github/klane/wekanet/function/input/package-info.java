@@ -1,4 +1,4 @@
 /**
  * Neuron input functions.
  */
-package com.github.klane.wann.function.input;
+package com.github.klane.wekanet.function.input;

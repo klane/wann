@@ -1,9 +1,9 @@
-package com.github.klane.wann.core;
+package com.github.klane.wekanet.core;
 
-import com.github.klane.wann.function.activation.ActivationFunctions;
-import com.github.klane.wann.function.input.InputFunctions;
-import com.github.klane.wann.learn.LearningRule;
-import com.github.klane.wann.util.WekaUtils;
+import com.github.klane.wekanet.function.activation.ActivationFunctions;
+import com.github.klane.wekanet.function.input.InputFunctions;
+import com.github.klane.wekanet.learn.LearningRule;
+import com.github.klane.wekanet.util.WekaUtils;
 import com.google.common.base.Preconditions;
 import javafx.util.Builder;
 import lombok.Getter;
