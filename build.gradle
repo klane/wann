@@ -32,7 +32,7 @@ dependencies {
 }
 
 javadoc {
-    title 'WANN: Weka Artificial Neural Network ' + version + ' API'
+    title 'WekaNet: Weka Artificial Neural Network ' + version + ' API'
 
     options {
         author true
