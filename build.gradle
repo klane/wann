@@ -4,12 +4,10 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.20.0'
 }
 
-group 'com.github.klane'
-version '1.0-SNAPSHOT'
-
 def compatibilityVersion = 1.8
 sourceCompatibility = compatibilityVersion
 targetCompatibility = compatibilityVersion
+version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
