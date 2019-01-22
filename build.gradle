@@ -25,6 +25,7 @@ repositories {
 }
 
 dependencies {
+    annotationProcessor 'org.projectlombok:lombok:1.16.18'
     compile 'com.google.guava:guava:23.0'
     compile 'nz.ac.waikato.cms.weka:weka-stable:3.8.1'
     compile 'org.projectlombok:lombok:1.16.18'
