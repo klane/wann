@@ -14,11 +14,17 @@ repositories {
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.4'
-    compile 'com.google.guava:guava:27.0.1-jre'
-    compile 'nz.ac.waikato.cms.weka:weka-stable:3.8.3'
-    compile 'org.projectlombok:lombok:1.18.4'
-    testCompile 'junit:junit:4.13-beta-1'
+    // process Project Lombok annotations
+    def lombok = 'org.projectlombok:lombok:1.18.4'
+    compileOnly lombok
+    annotationProcessor lombok
+
+    // WekaNet dependencies
+    implementation 'com.google.guava:guava:27.0.1-jre'
+    implementation 'nz.ac.waikato.cms.weka:weka-stable:3.8.3'
+
+    // test dependencies
+    testImplementation 'junit:junit:4.13-beta-1'
 }
 
 javadoc {
