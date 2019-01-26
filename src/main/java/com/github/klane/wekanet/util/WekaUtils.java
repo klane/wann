@@ -7,11 +7,8 @@ import weka.core.Instances;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class WekaUtils {
-
-    private WekaUtils() {
-        throw new UnsupportedOperationException();
-    }
+public enum WekaUtils {
+    ; // empty enum instance
 
     public static List<Attribute> attributes(final Instances dataSet) {
         List<Attribute> attributes = new ArrayList<>(dataSet.numAttributes());
