@@ -1,7 +1,7 @@
 package com.github.klane.wekanet.core;
 
+import com.github.klane.wekanet.util.Builder;
 import com.google.common.base.Preconditions;
-import javafx.util.Builder;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;

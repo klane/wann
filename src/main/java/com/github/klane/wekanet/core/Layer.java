@@ -2,8 +2,8 @@ package com.github.klane.wekanet.core;
 
 import com.github.klane.wekanet.function.activation.ActivationFunction;
 import com.github.klane.wekanet.function.input.InputFunction;
+import com.github.klane.wekanet.util.Builder;
 import com.google.common.base.Preconditions;
-import javafx.util.Builder;
 import lombok.Getter;
 
 import java.util.*;

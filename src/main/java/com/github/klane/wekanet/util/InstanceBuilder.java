@@ -2,7 +2,6 @@ package com.github.klane.wekanet.util;
 
 import com.google.common.base.Preconditions;
 import com.google.common.primitives.Doubles;
-import javafx.util.Builder;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;

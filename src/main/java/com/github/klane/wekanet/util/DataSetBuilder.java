@@ -1,7 +1,6 @@
 package com.github.klane.wekanet.util;
 
 import com.google.common.base.Preconditions;
-import javafx.util.Builder;
 import weka.core.Attribute;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader;

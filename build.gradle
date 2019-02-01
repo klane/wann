@@ -34,7 +34,6 @@ javadoc {
         author true
         linkSource true
         links 'https://docs.oracle.com/javase/8/docs/api/'
-        links 'https://docs.oracle.com/javase/8/javafx/api/'
         links 'http://weka.sourceforge.net/doc.stable/'
     }
 }
