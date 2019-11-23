@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'com.bmuschko.nexus' version '2.3.1'
-    id 'com.github.ben-manes.versions' version '0.20.0'
+    id 'com.github.ben-manes.versions' version '0.27.0'
 }
 
 def compatibilityVersion = 1.8
@@ -16,16 +16,16 @@ repositories {
 
 dependencies {
     // process Project Lombok annotations
-    def lombok = 'org.projectlombok:lombok:1.18.4'
+    def lombok = 'org.projectlombok:lombok:1.18.10'
     compileOnly lombok
     annotationProcessor lombok
 
     // WekaNet dependencies
-    implementation 'com.google.guava:guava:27.0.1-jre'
+    implementation 'com.google.guava:guava:28.1-jre'
     implementation 'nz.ac.waikato.cms.weka:weka-stable:3.8.3'
 
     // test dependencies
-    testImplementation 'junit:junit:4.13-beta-1'
+    testImplementation 'junit:junit:4.13-rc-1'
 }
 
 def static javaAPI() {
