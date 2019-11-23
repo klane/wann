@@ -1,9 +1,9 @@
 # WekaNet: Weka Artificial Neural Network
 
 [![Test Status](https://github.com/klane/wekanet/workflows/Tests/badge.svg)](https://github.com/klane/wekanet/actions)
-[![GitHub License](https://img.shields.io/github/license/klane/wekanet.svg)](https://github.com/klane/wekanet/blob/master/LICENSE)
 [![Build Status](https://travis-ci.com/klane/wekanet.svg?branch=master)](https://travis-ci.com/klane/wekanet)
-[![codecov](https://codecov.io/gh/klane/wekanet/branch/master/graph/badge.svg)](https://codecov.io/gh/klane/wekanet)
+[![Coverage Status](https://img.shields.io/codecov/c/github/klane/wekanet.svg?label=Coverage&logo=codecov)](https://codecov.io/gh/klane/wekanet)
+[![License](https://img.shields.io/github/license/klane/wekanet.svg?label=License)](LICENSE)
 
 WekaNet contains an artificial neural network framework for use with [Weka](http://www.cs.waikato.ac.nz/ml/weka/index.html) that provides more
 control of the network structure than what is available in Weka's `MultilayerPerceptron` classifier.
