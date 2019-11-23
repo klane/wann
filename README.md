@@ -1,4 +1,6 @@
 # WekaNet: Weka Artificial Neural Network
+
+[![Test Status](https://github.com/klane/wekanet/workflows/Tests/badge.svg)](https://github.com/klane/wekanet/actions)
 [![GitHub License](https://img.shields.io/github/license/klane/wekanet.svg)](https://github.com/klane/wekanet/blob/master/LICENSE)
 [![Build Status](https://travis-ci.com/klane/wekanet.svg?branch=master)](https://travis-ci.com/klane/wekanet)
 [![codecov](https://codecov.io/gh/klane/wekanet/branch/master/graph/badge.svg)](https://codecov.io/gh/klane/wekanet)
